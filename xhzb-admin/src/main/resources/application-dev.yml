@@ -61,6 +61,20 @@ spring:
       jedis:
         pool:
           enabled: true
+  #springAi配置
+  ai:
+    openai:
+      api-key: sk-ws-H.EDXHPHR.jOvh.MEUCICtVSHrJ_hQIAnw_R7aMhWmhOX-SKjnOXBDpe-lkC_ltAiEAzxbjqCeD4zMCoXkt0_pHveU4g7ERQDXooRUmRuIkjTg #读取环境变量中的api key
+      base-url: https://dashscope.aliyuncs.com/compatible-mode
+      chat:
+        options:
+          model: qwen-max
+    deepseek:
+      base-url: https://api.deepseek.com
+      api-key: sk-f4371f109a3d4b249a506eb886b3b18c #读取环境变量中的api key
+      chat:
+        options:
+          model: deepseek-v4-flash
 # Springdoc配置
 springdoc:
   api-docs:

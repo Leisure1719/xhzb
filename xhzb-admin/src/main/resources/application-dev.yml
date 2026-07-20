@@ -69,6 +69,10 @@ spring:
       chat:
         options:
           model: qwen-max
+      embedding:
+        options:
+          model: text-embedding-v3
+          dimensions: 1024
     deepseek:
       base-url: https://api.deepseek.com
       api-key: sk-f4371f109a3d4b249a506eb886b3b18c #读取环境变量中的api key

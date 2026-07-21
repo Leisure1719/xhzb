@@ -27,7 +27,18 @@ import java.util.List;
 
 @Configuration
 public class SpringAiConfigure {
-
+    /*
+    用于分析老人健康状况的ChatClient
+     */
+    @Bean
+    public ChatClient simpleOpenAiChatClient(OpenAiChatModel openAiChatModel) {
+        return ChatClient
+                .builder(openAiChatModel)
+                .defaultSystem("你是一个健康评估专家，专门用来评估老人的健康情况")
+                //.defaultTools(weatherTools)
+                .defaultAdvisors(new SimpleLoggerAdvisor())
+                .build();
+    }
 
     /**
      * 创建并返回一个ChatClient的Spring Bean实例。

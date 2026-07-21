@@ -69,12 +69,13 @@ public class RedisStackTest {
     public void test2() {
         MyPagePdfDocumentReader myPagePdfDocumentReader = new MyPagePdfDocumentReader();
         List<Document> docsFromPdf = myPagePdfDocumentReader.getDocsFromPdf();
-        List<Document> list = splitCustomized(docsFromPdf);
-        int totalSize = 10;
-        for (int i = 0; i < list.size(); i += totalSize) {
-            List<Document> document = list.subList(i, Math.min(i + totalSize, list.size()));
-            vectorStore.add(document);
-        }
+        System.out.println(docsFromPdf);
+//        List<Document> list = splitCustomized(docsFromPdf);
+//        int totalSize = 10;
+//        for (int i = 0; i < list.size(); i += totalSize) {
+//            List<Document> document = list.subList(i, Math.min(i + totalSize, list.size()));
+//            vectorStore.add(document);
+//        }
     }
 
 

@@ -83,7 +83,7 @@ public class ChatController extends BaseController {
         return success(list);
     }
 
-    @Delete("/history/{chatId}")
+    @DeleteMapping("/history/{chatId}")
     public AjaxResult deleteChatHistory(@PathVariable String chatId){
         chatHistoryService.deleteHistory(chatId);
         return success();

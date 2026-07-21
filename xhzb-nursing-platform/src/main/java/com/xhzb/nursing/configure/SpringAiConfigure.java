@@ -36,11 +36,11 @@ public class SpringAiConfigure {
      * @return
      */
     @Bean
-    public ChatClient openAiChatClient(OpenAiChatModel openAiChatModel, WeatherTools weatherTools, RedisMemoryChatServiceImpl redisMemoryChatService, VectorStore vectorStore) {
+    public ChatClient openAiChatClient(OpenAiChatModel openAiChatModel, RedisMemoryChatServiceImpl redisMemoryChatService, VectorStore vectorStore) {
         QuestionAnswerAdvisor questionAnswerAdvisor = QuestionAnswerAdvisor
                 .builder(vectorStore)
                 .searchRequest(SearchRequest.builder()
-                        .similarityThreshold(0.7d)
+                        .similarityThreshold(0.5d)
                         .topK(5)
                         .build())
                 .build();

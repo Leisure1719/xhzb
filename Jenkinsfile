@@ -1,7 +1,7 @@
 pipeline {
     agent any
     environment {
-        GIT_SSH_COMMAND = 'ssh -o StrictHostKeyChecking=no'
+        GIT_SSH_COMMAND = 'ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null'
     }
     options {
         timestamps()
@@ -11,7 +11,7 @@ pipeline {
         jdk 'jdk17'
     }
     stages {
-        stage('checkout'){
+        stage('拉取代码'){
             steps {
                 checkout scm
             }

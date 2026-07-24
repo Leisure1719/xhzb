@@ -2,8 +2,8 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-	<modelVersion>4.0.0</modelVersion>
-	
+    <modelVersion>4.0.0</modelVersion>
+
     <groupId>com.xhzb</groupId>
     <artifactId>xhzb</artifactId>
     <version>3.9.0</version>
@@ -11,7 +11,7 @@
     <name>xhzb</name>
     <url>http://www.xhzb.com</url>
     <description>星海智伴后台管理系统</description>
-    
+
     <properties>
         <xhzb.version>3.9.0</xhzb.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -227,12 +227,12 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.6.1</version>
+                <version>3.14.0</version>
                 <configuration>
                     <source>${java.version}</source>
                     <target>${java.version}</target>
                     <encoding>${project.build.sourceEncoding}</encoding>
-                <!--    <parameters>true</parameters>-->
+                    <parameters>true</parameters>
                 </configuration>
             </plugin>
         </plugins>

@@ -3,6 +3,7 @@ package com.xhzb.nursing.controller;
 import java.util.List;
 
 import com.xhzb.nursing.domain.dto.ElderAssessmentDto;
+import com.xhzb.nursing.service.IHealthAssessmentDataCollectionService;
 import com.xhzb.nursing.service.IHealthAssessmentReportService;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -42,6 +43,9 @@ public class HealthAssessmentController extends BaseController {
 
     @Autowired
     private IHealthAssessmentReportService healthAssessmentReportService;
+
+    @Autowired
+    private IHealthAssessmentDataCollectionService healthAssessmentDataCollectionService;
 
     /**
      * 查询健康评估记录列表
@@ -146,5 +150,10 @@ public class HealthAssessmentController extends BaseController {
     public AjaxResult removeReport(@PathVariable Long id) {
         healthAssessmentService.removeReport(id);
         return success();
+    }
+
+    @GetMapping("/elder/{id}")
+    public AjaxResult getElderInfo(@PathVariable Long id){
+        return success(healthAssessmentService.getElderInfo(id));
     }
 }

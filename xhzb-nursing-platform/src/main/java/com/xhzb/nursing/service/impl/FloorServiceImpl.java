@@ -2,6 +2,7 @@ package com.xhzb.nursing.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.xhzb.nursing.domain.Floor;
+import com.xhzb.nursing.domain.vo.TreeVo;
 import com.xhzb.nursing.mapper.FloorMapper;
 import com.xhzb.nursing.service.IFloorService;
 import com.xhzb.nursing.domain.vo.FloorVo;
@@ -83,6 +84,12 @@ public class FloorServiceImpl extends ServiceImpl<FloorMapper, Floor> implements
         return removeById(id) ? 1 : 0;
     }
 
+
+    @Override
+    public List<TreeVo> getRoomAndBedByBedStatus(int status) {
+        List<TreeVo> list = floorMapper.getRoomAndBedByBedStatus(status);
+        return list;
+    }
 
     /**
      * 查询负责老人楼层

@@ -3,6 +3,7 @@ package com.xhzb.nursing.controller;
 import java.util.List;
 
 import com.xhzb.nursing.domain.vo.NursingLevelVo;
+import org.aspectj.weaver.loadtime.Aj;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -96,5 +97,14 @@ public class NursingLevelController extends BaseController
     public AjaxResult remove(@Schema(name = "护理等级ID", requiredMode = Schema.RequiredMode.REQUIRED) @PathVariable Long[] ids)
     {
         return toAjax(nursingLevelService.deleteNursingLevelByIds(ids));
+    }
+
+
+    @GetMapping("/listAll")
+    public AjaxResult listAll(){
+        //返回状态为启用的护理等级
+        List<NursingLevel> list = nursingLevelService.lambdaQuery().eq(NursingLevel::getStatus, 1)
+                .list();
+        return success(list);
     }
 }

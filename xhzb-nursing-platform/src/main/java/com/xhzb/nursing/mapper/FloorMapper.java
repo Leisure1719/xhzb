@@ -3,6 +3,7 @@ package com.xhzb.nursing.mapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.xhzb.nursing.domain.Floor;
 import com.xhzb.nursing.domain.vo.FloorVo;
+import com.xhzb.nursing.domain.vo.TreeVo;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -65,4 +66,6 @@ public interface FloorMapper extends BaseMapper<Floor>
     public int deleteFloorByIds(Long[] ids);
 
     List<Floor> selectAllByNur();
+
+    List<TreeVo> getRoomAndBedByBedStatus(int status);
 }

@@ -1,7 +1,13 @@
 package com.xhzb.nursing.service.impl;
 
+import java.util.HashMap;
 import java.util.List;
+
+import cn.hutool.json.JSONObject;
+import cn.hutool.json.JSONUtil;
+import com.xhzb.common.exception.base.BaseException;
 import com.xhzb.common.utils.DateUtils;
+import com.xhzb.nursing.domain.HealthAssessment;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.xhzb.nursing.mapper.HealthAssessmentDataCollectionMapper;
@@ -9,6 +15,7 @@ import com.xhzb.nursing.domain.HealthAssessmentDataCollection;
 import com.xhzb.nursing.service.IHealthAssessmentDataCollectionService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import java.util.Arrays;
+import java.util.Map;
 
 /**
  * 健康评估数据采集Service业务层处理
@@ -21,6 +28,7 @@ public class HealthAssessmentDataCollectionServiceImpl extends ServiceImpl<Healt
 {
     @Autowired
     private HealthAssessmentDataCollectionMapper healthAssessmentDataCollectionMapper;
+
 
     /**
      * 查询健康评估数据采集
@@ -81,6 +89,8 @@ public class HealthAssessmentDataCollectionServiceImpl extends ServiceImpl<Healt
     {
         return removeByIds(Arrays.asList(ids))? 1 : 0;
     }
+
+
 
     /**
      * 删除健康评估数据采集信息

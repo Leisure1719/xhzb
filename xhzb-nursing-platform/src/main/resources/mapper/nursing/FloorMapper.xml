@@ -89,4 +89,30 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             #{id}
         </foreach>
     </delete>
+
+    <resultMap id="treeVoMap" type="treeVo">
+        <id property="value" column="fid"></id>
+        <result property="label" column="fname"></result>
+        <collection property="children" ofType="com.xhzb.nursing.domain.vo.TreeVo">
+            <id property="value" column="rid"></id>
+            <result property="label" column="code"></result>
+            <collection property="children" ofType="com.xhzb.nursing.domain.vo.TreeVo">
+                <id property="value" column="bid"></id>
+                <result property="label" column="bed_number"></result>
+            </collection>
+        </collection>
+    </resultMap>
+    
+    <select id="getRoomAndBedByBedStatus" resultMap="treeVoMap">
+        select f.id fid,
+               f.name fname,
+               r.id rid,
+               r.code code,
+               b.id bid,
+               b.bed_number bed_number
+        from floor f
+        left join room r on r.floor_id = f.id
+        left join bed b on b.room_id = r.id
+        where b.bed_status = #{status}
+    </select>
 </mapper>

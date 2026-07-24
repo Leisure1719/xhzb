@@ -2,6 +2,7 @@ package com.xhzb.nursing.service.impl;
 
 import java.io.InputStream;
 import java.time.LocalDateTime;
+import java.util.HashMap;
 import java.util.List;
 
 import cn.hutool.json.JSONObject;
@@ -26,6 +27,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Arrays;
+import java.util.Map;
 
 /**
  * 健康评估记录Service业务层处理
@@ -154,6 +156,34 @@ public class HealthAssessmentServiceImpl extends ServiceImpl<HealthAssessmentMap
     }
 
     @Override
+    public Map getElderInfo(Long id) {
+
+        HealthAssessment ha = lambdaQuery().eq(HealthAssessment::getId, id).one();
+        if(ha == null){
+            throw new BaseException("老人健康信息不存在");
+        }
+        HashMap map = new HashMap<>();
+        map.put("coreSuggestion",ha.getCoreSuggestion());
+        HealthAssessmentDataCollection hadc = healthAssessmentDataCollectionService.lambdaQuery()
+                .eq(HealthAssessmentDataCollection::getId, id)
+                .one();
+        String basicInfo = hadc.getBasicInfo();
+        JSONObject json = JSONUtil.parseObj(basicInfo);
+        map.put("phone",json.get("elderContact"));
+        map.put("medicalPaymentMethod",json.get("medicalPaymentMethod"));
+        map.put("nation",json.get("nation"));
+        map.put("educationLevel",json.get("educationLevel"));
+        map.put("idCardNo",json.get("idCard"));
+        map.put("name",json.get("elderName"));
+        map.put("socialSecurityCard",json.get("socialSecurityCard"));
+        map.put("livingSituation",json.get("livingSituation"));
+        map.put("religiousBelief",json.get("religiousBelief"));
+        map.put("economicSource",json.get("economicSource"));
+        map.put("maritalStatus",json.get("maritalStatus"));
+        return map;
+    }
+
+    @Override
     @Transactional
     public long assessmentData(ElderAssessmentDto dto) {
         //1.老人能力评估
@@ -226,6 +256,10 @@ public class HealthAssessmentServiceImpl extends ServiceImpl<HealthAssessmentMap
         har.setHealthAssessmentId(dto.getId());
         har.setAssessmentTime(LocalDateTime.now());
         har.setAssessorName(SecurityUtils.getUsername());
+        har.setDailyActivityLevel(abilityRating);
+        har.setMentalStatusLevel(mentalStateRating);
+        har.setPerceptionCommunicationLevel(perceptionAndCommunicationRating);
+        har.setSocialParticipationLevel(socialParticipationRating);
         har.setInitialAbilityLevel(preLevel);
         har.setFinalAbilityLevel(finalLevel);
         har.setLevelChangeReason(reason);

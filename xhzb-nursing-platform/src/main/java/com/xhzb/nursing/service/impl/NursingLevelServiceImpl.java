@@ -82,6 +82,8 @@ public class NursingLevelServiceImpl extends ServiceImpl<NursingLevelMapper,Nurs
         return nursingLevelMapper.deleteNursingLevelByIds(ids);
     }
 
+
+
     /**
      * 删除护理等级信息
      * 

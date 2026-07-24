@@ -96,4 +96,9 @@ public class FloorController extends BaseController
         List<Floor> list = floorService.selectAllByNur();
         return R.ok(list);
     }
+
+    @GetMapping("/getRoomAndBedByBedStatus/{status}")
+    public AjaxResult getRoomAndBedByBedStatus(@PathVariable int status) {
+        return success(floorService.getRoomAndBedByBedStatus(status));
+    }
 }

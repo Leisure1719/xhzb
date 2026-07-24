@@ -93,6 +93,12 @@ public class RoomServiceImpl extends ServiceImpl<RoomMapper, Room> implements IR
     }
 
 
+    @Override
+    public RoomVo getRoomOne(Long id) {
+        RoomVo roomVo = roomMapper.getRoomOne(id);
+        return roomVo;
+    }
+
     /**
      * 获取所有房间（负责老人）
      *

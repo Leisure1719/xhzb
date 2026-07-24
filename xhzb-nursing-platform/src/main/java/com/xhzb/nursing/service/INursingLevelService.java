@@ -61,5 +61,4 @@ public interface INursingLevelService  extends IService<NursingLevel>
      * @return 结果
      */
     public int deleteNursingLevelById(Long id);
-
 }

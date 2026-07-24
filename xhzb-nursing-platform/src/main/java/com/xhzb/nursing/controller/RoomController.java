@@ -106,4 +106,12 @@ public class RoomController extends BaseController
         return toAjax(roomService.deleteRoomByIds(ids));
     }
 
+    /**
+     * 查询房间数据(楼层、房间、价格)
+     */
+    @GetMapping("/one/{id}")
+    public AjaxResult getRoomOne(@PathVariable Long id)
+    {
+        return success(roomService.getRoomOne(id));
+    }
 }

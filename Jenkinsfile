@@ -1,5 +1,8 @@
 pipeline {
     agent any
+    environment {
+        GIT_SSH_COMMAND = 'ssh -o StrictHostKeyChecking=no'
+    }
     options {
         timestamps()
     }
@@ -8,6 +11,11 @@ pipeline {
         jdk 'jdk17'
     }
     stages {
+        stage('checkout'){
+            steps {
+                checkout scm
+            }
+        }
         stage('清除工作空间') {
             steps {
                 cleanWs()

@@ -16,7 +16,7 @@ ruoyi:
 # 激活环境
 spring:
   profiles:
-    active: dev
+    active: prod
 
 # 用户配置
 user:

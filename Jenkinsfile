@@ -63,11 +63,18 @@ pipeline {
         stage('部署服务'){
             steps {
                 script {
-                    for (ws in services.tokenize(",")) {
-                        sh "pwd"
-                        sh "cd `pwd`"
-                        echo "部署升级:${ws}服务"
-                        sh "chmod +x ./${ws}/deploy.sh && sh ./${ws}/deploy.sh ${ws} ${DOCKER_TAG}"
+                    withCredentials([
+                        string(credentialsId: 'OSS_ACCESS_KEY_ID', variable: 'OSS_ACCESS_KEY_ID'),
+                        string(credentialsId: 'OSS_ACCESS_KEY_SECRET', variable: 'OSS_ACCESS_KEY_SECRET'),
+                        string(credentialsId: 'OPENAI_API_KEY', variable: 'OPENAI_API_KEY')
+                    ]) {
+                        for (ws in services.tokenize(",")) {
+                            sh "pwd"
+                            sh "cd `pwd`"
+                            echo "部署升级:${ws}服务"
+                            // 注意：环境变量已在 withCredentials 中注入，脚本内部可直接使用
+                            sh "chmod +x ./${ws}/deploy.sh && sh ./${ws}/deploy.sh ${ws} ${DOCKER_TAG}"
+                        }
                     }
                 }
             }

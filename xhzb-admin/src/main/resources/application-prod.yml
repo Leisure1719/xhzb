@@ -36,17 +36,12 @@ spring:
         options:
           model: text-embedding-v3
           dimensions: 1024
-    ollama:
-      base-url: http://localhost:11434
-      chat:
-        options:
-          model: qwen3.5:9b
     deepseek:
-      base-url: https://api.deepseek.com
-      api-key: ${DEEPSEEK_API_KEY}
-      chat:
-        options:
-          model: deepseek-chat
+        base-url: https://api.deepseek.com
+        api-key: sk-f4371f109a3d4b249a506eb886b3b18c #读取环境变量中的api key
+        chat:
+          options:
+            model: deepseek-v4-flash
   # 资源信息
   messages:
     # 国际化资源文件路径
@@ -99,7 +94,7 @@ springdoc:
       packages-to-scan: com.xhzb
 # oss的配置，要根据自己实际情况来进行修改
 oss:
-  endpoint: oss-cn-beijing.aliyuncs.com
+  endpoint: oss-cn-shenzhen.aliyuncs.com
   accessKeyId: ${OSS_ACCESS_KEY_ID}
   accessKeySecret: ${OSS_ACCESS_KEY_SECRET}
-  bucketName: hm-xhzb
+  bucketName: cshm-qk-image

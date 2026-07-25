@@ -2,6 +2,7 @@ package com.xhzb.framework.config;
 
 import java.util.concurrent.TimeUnit;
 
+import com.xhzb.framework.interceptor.impl.WechatInterceptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -27,6 +28,9 @@ public class ResourcesConfig implements WebMvcConfigurer
     @Autowired
     private RepeatSubmitInterceptor repeatSubmitInterceptor;
 
+    @Autowired
+    private WechatInterceptor wechatInterceptor;
+
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry)
     {
@@ -38,6 +42,8 @@ public class ResourcesConfig implements WebMvcConfigurer
         registry.addResourceHandler("/swagger-ui/**")
                 .addResourceLocations("classpath:/META-INF/resources/webjars/springfox-swagger-ui/")
                 .setCacheControl(CacheControl.maxAge(5, TimeUnit.HOURS).cachePublic());
+
+
     }
 
     /**
@@ -47,6 +53,8 @@ public class ResourcesConfig implements WebMvcConfigurer
     public void addInterceptors(InterceptorRegistry registry)
     {
         registry.addInterceptor(repeatSubmitInterceptor).addPathPatterns("/**");
+        registry.addInterceptor(wechatInterceptor).addPathPatterns("/member/**")
+                .excludePathPatterns("/member/user/login","/member/user/my","/member/roomTypes");
     }
 
     /**

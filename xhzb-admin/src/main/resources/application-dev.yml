@@ -98,3 +98,7 @@ oss:
   accessKeyId: ${OSS_ACCESS_KEY_ID}
   accessKeySecret: ${OSS_ACCESS_KEY_SECRET}
   bucketName: cshm-qk-image
+
+wechat:
+  appid: wx9c156832e988f82a
+  secret: d9f3e75dbf378cf3a99ffb655e8fe755

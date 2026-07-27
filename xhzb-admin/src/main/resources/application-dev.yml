@@ -102,3 +102,16 @@ oss:
 wechat:
   appid: wx9c156832e988f82a
   secret: d9f3e75dbf378cf3a99ffb655e8fe755
+
+huaweicloud:
+  ak: HPUATKE9RMHA85MCOZM7
+  sk: g1zmbcAeXQxJ5pFbMsmAZc0kH6NTQWjXUFUuiQQS
+  #如果是上海一，请填写"cn-east-3"；如果是北京四，请填写"cn-north-4";
+  regionId: cn-east-3
+  endpoint: 31b1e6863a.st1.iotda-app.cn-east-3.myhuaweicloud.com
+  projectId: 801a3d22cdc34c09841fbe711b26db07
+  #amqp相关配置 第二天课程接收设备数据使用
+  host: 31b1e6863a.st1.iotda-app.cn-east-3.myhuaweicloud.com
+  accessKey:
+  accessCode:
+  queueName: DefaultQueue   #默认无需改动

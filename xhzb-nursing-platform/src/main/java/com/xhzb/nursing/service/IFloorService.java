@@ -63,4 +63,6 @@ public interface IFloorService extends IService<Floor> {
     List<Floor> selectAllByNur();
 
     List<TreeVo> getRoomAndBedByBedStatus(int status);
+
+    List<FloorVo> getAllFloorWithDevice();
 }

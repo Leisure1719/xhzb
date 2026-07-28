@@ -56,7 +56,7 @@
             <groupId>com.xhzb</groupId>
             <artifactId>xhzb-framework</artifactId>
         </dependency>
-
+        <!-- 华为云Iot-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-websocket</artifactId>
@@ -67,6 +67,16 @@
             <version>3.1.76</version>
             <scope>compile</scope>
         </dependency>
+
+        <!--AMQP-->
+        <!-- amqp 1.0 qpid client -->
+        <dependency>
+            <groupId>org.apache.qpid</groupId>
+            <artifactId>qpid-jms-client</artifactId>
+            <version>0.61.0</version>
+        </dependency>
+
     </dependencies>
+
 
 </project>

@@ -101,4 +101,10 @@ public class FloorController extends BaseController
     public AjaxResult getRoomAndBedByBedStatus(@PathVariable int status) {
         return success(floorService.getRoomAndBedByBedStatus(status));
     }
+
+    //查询智能床位楼层数据
+    @GetMapping("/getAllFloorsWithDevice")
+    public AjaxResult getAllFloorWithDevice(){
+        return success(floorService.getAllFloorWithDevice());
+    }
 }

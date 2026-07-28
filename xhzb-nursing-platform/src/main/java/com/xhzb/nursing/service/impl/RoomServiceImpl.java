@@ -4,12 +4,16 @@ import cn.hutool.json.JSONUtil;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.xhzb.common.constant.CacheConstants;
 import com.xhzb.common.utils.StringUtils;
+import com.xhzb.nursing.constant.RedisKeyConstant;
+import com.xhzb.nursing.domain.DeviceData;
 import com.xhzb.nursing.domain.Room;
+import com.xhzb.nursing.mapper.DeviceDataMapper;
 import com.xhzb.nursing.mapper.RoomMapper;
 import com.xhzb.nursing.service.IRoomService;
 import com.xhzb.nursing.domain.vo.RoomVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
@@ -25,6 +29,11 @@ import java.util.List;
 public class RoomServiceImpl extends ServiceImpl<RoomMapper, Room> implements IRoomService {
     @Autowired
     private RoomMapper roomMapper;
+
+    @Autowired
+    private StringRedisTemplate redisTemplate;
+    @Autowired
+    private DeviceDataMapper deviceDataMapper;
 
     /**
      * 查询房间
@@ -97,6 +106,36 @@ public class RoomServiceImpl extends ServiceImpl<RoomMapper, Room> implements IR
     public RoomVo getRoomOne(Long id) {
         RoomVo roomVo = roomMapper.getRoomOne(id);
         return roomVo;
+    }
+
+    @Override
+    public List<RoomVo> getRoomsWithDeviceByFloorId(long floorId) {
+        //从表里封装数据
+        List<RoomVo> roomVos = roomMapper.selectRoomsWithDeviceByFloorId(floorId);
+        roomVos.forEach(roomVo -> {
+            //从redis中获取房间设备数据并封装
+            roomVo.getDeviceVos().forEach(deviceInfo -> {
+                String deviceData = (String)redisTemplate.opsForHash().get(RedisKeyConstant.IOT_DEVICE_DATA_KEY, deviceInfo.getIotId());
+                if(StringUtils.isEmpty(deviceData)){
+                    return;//跳出本次循环，并不是结束方法
+                }
+                List<DeviceData> list = JSONUtil.toList(deviceData, DeviceData.class);
+                deviceInfo.setDeviceDataVos(list);
+            });
+            //从redis中获取床位设备数据并封装
+            roomVo.getBedVoList().forEach(bedVo -> {
+                bedVo.getDeviceVos().forEach(deviceInfo -> {
+                    String deviceData = (String)redisTemplate.opsForHash().get(RedisKeyConstant.IOT_DEVICE_DATA_KEY, deviceInfo.getIotId());
+                    if(StringUtils.isEmpty(deviceData)){
+                        return;//跳出本次循环，并不是结束方法
+                    }
+                    List<DeviceData> list = JSONUtil.toList(deviceData, DeviceData.class);
+                    deviceInfo.setDeviceDataVos(list);
+                });
+            });
+        });
+
+        return roomVos;
     }
 
     /**

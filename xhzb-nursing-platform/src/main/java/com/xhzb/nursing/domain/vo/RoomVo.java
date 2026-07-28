@@ -30,4 +30,6 @@ public class RoomVo {
     @Schema(title = "床位列表")
     private List<BedVo> bedVoList;
 
+    @Schema(title = "房间设备信息")
+    private List<DeviceInfo> deviceVos;
 }

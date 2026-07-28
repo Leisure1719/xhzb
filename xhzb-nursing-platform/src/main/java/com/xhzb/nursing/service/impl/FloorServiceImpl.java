@@ -86,6 +86,11 @@ public class FloorServiceImpl extends ServiceImpl<FloorMapper, Floor> implements
 
 
     @Override
+    public List<FloorVo> getAllFloorWithDevice() {
+        return floorMapper.getAllFloorWithDevice();
+    }
+
+    @Override
     public List<TreeVo> getRoomAndBedByBedStatus(int status) {
         List<TreeVo> list = floorMapper.getRoomAndBedByBedStatus(status);
         return list;

@@ -114,4 +114,10 @@ public class RoomController extends BaseController
     {
         return success(roomService.getRoomOne(id));
     }
+
+    @GetMapping("/getRoomsWithDeviceByFloorId/{floorId}")
+    public AjaxResult getRoomsWithDeviceByFloorId(@PathVariable long floorId){
+        List<RoomVo> roomVos = roomService.getRoomsWithDeviceByFloorId(floorId);
+        return success(roomVos);
+    }
 }

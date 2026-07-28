@@ -68,4 +68,6 @@ public interface FloorMapper extends BaseMapper<Floor>
     List<Floor> selectAllByNur();
 
     List<TreeVo> getRoomAndBedByBedStatus(int status);
+
+    List<FloorVo> getAllFloorWithDevice();
 }

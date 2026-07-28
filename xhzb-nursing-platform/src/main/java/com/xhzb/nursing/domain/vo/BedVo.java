@@ -1,6 +1,7 @@
 package com.xhzb.nursing.domain.vo;
 
 import com.xhzb.common.core.domain.entity.SysUser;
+import com.xhzb.nursing.domain.Device;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
@@ -47,5 +48,8 @@ public class BedVo {
 
     @Schema(title = "护理员")
     private List<SysUser> userVos;
+
+    @Schema(title = "床位产品信息")
+    private List<DeviceInfo> deviceVos;
 
 }

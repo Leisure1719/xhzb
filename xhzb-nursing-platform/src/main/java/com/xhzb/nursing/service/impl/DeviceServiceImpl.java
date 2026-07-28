@@ -7,6 +7,7 @@ import java.util.*;
 
 
 import cn.hutool.core.bean.BeanUtil;
+import cn.hutool.core.collection.CollUtil;
 import cn.hutool.json.JSONObject;
 import cn.hutool.json.JSONUtil;
 import com.huaweicloud.sdk.iotda.v5.IoTDAClient;
@@ -18,6 +19,7 @@ import com.xhzb.nursing.constant.RedisKeyConstant;
 import com.xhzb.nursing.domain.dto.DeviceDto;
 import com.xhzb.nursing.domain.vo.DeviceDetailVo;
 import com.xhzb.nursing.domain.vo.ProdoctVo;
+import com.xhzb.nursing.util.DateTimeZoneConverter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
@@ -105,8 +107,32 @@ public class DeviceServiceImpl extends ServiceImpl<DeviceMapper, Device> impleme
 
     @Override
     public List queryServiceProperties(String iotId) {
-
-        return List.of();
+        ShowDeviceShadowRequest request = new ShowDeviceShadowRequest();
+        request.withDeviceId(iotId);
+        ShowDeviceShadowResponse response;
+        response = iotdaClient.showDeviceShadow(request);
+        if(response.getHttpStatusCode() != 200){
+            throw new BaseException("查询设备上报数据失败");
+        }
+        List<DeviceShadowData> shadow = response.getShadow();
+        if(CollUtil.isEmpty(shadow)){
+            return List.of();
+        }
+        ArrayList list = new ArrayList();
+        DeviceShadowProperties reported = shadow.get(0).getReported();
+        JSONObject entries = JSONUtil.parseObj(reported.getProperties());
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyyMMdd'T'HHmmss'Z'");
+        LocalDateTime time = LocalDateTime.parse(reported.getEventTime(), dtf);
+        //时区转换
+        LocalDateTime eventTime = DateTimeZoneConverter.utcToShanghai(time);
+        entries.forEach((k,v) ->{
+            HashMap map = new HashMap();
+            map.put("functionId",k);
+            map.put("value",v);
+            map.put("eventTime",eventTime);
+            list.add(map);
+        });
+        return list;
     }
 
     @Override

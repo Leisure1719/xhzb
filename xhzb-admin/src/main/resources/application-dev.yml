@@ -115,3 +115,8 @@ huaweicloud:
   accessKey: VgitcyMr
   accessCode: Qv1wf4AKpsqojs0DzAbkeMCZLneimKfm
   queueName: DefaultQueue   #默认无需改动
+
+# 报警规则相关角色名
+alertRule:
+  roleAdmin: 超级管理员
+  roleRepair: 维修工

@@ -8,11 +8,13 @@ import java.util.*;
 
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.collection.CollUtil;
+import cn.hutool.core.util.StrUtil;
 import cn.hutool.json.JSONObject;
 import cn.hutool.json.JSONUtil;
 import com.huaweicloud.sdk.iotda.v5.IoTDAClient;
 import com.huaweicloud.sdk.iotda.v5.model.*;
 import com.networknt.schema.format.DateTimeFormat;
+import com.xhzb.common.core.domain.AjaxResult;
 import com.xhzb.common.exception.base.BaseException;
 import com.xhzb.common.utils.StringUtils;
 import com.xhzb.nursing.constant.RedisKeyConstant;
@@ -103,6 +105,30 @@ public class DeviceServiceImpl extends ServiceImpl<DeviceMapper, Device> impleme
     public int deleteDeviceByIds(Long[] ids)
     {
         return removeByIds(Arrays.asList(ids))? 1 : 0;
+    }
+
+    @Override
+    public List<ServiceCapability> queryProduct(String productKey) {
+        //参数校验
+        if(StrUtil.isBlank(productKey)){
+            throw new BaseException("请输入正确的参数");
+        }
+        //调用华为云物联网接口
+        ShowProductRequest showProductRequest = new ShowProductRequest();
+        showProductRequest.setProductId(productKey);
+        ShowProductResponse response;
+
+        try {
+            response = iotdaClient.showProduct(showProductRequest);
+        } catch (Exception e) {
+            throw new BaseException("查询产品详情失败");
+        }
+        //判断是否存在服务数据
+        List<ServiceCapability> serviceCapabilities = response.getServiceCapabilities();
+        if(CollUtil.isEmpty(serviceCapabilities)){
+            return Collections.emptyList();
+        }
+        return serviceCapabilities;
     }
 
     @Override

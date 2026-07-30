@@ -2,6 +2,7 @@ package com.xhzb.nursing.controller;
 
 import java.util.List;
 
+import com.huaweicloud.sdk.iotda.v5.model.ServiceCapability;
 import com.huaweicloud.sdk.iotda.v5.model.ShowDeviceRequest;
 import com.huaweicloud.sdk.iotda.v5.model.ShowDeviceResponse;
 import com.xhzb.nursing.domain.dto.DeviceDto;
@@ -89,5 +90,12 @@ public class DeviceController extends BaseController
         return success(list);
     }
 
-
+    /**
+     * 查询产品详情(新增报警规则里面使用)
+     */
+    @GetMapping("/queryProduct/{productKey}")
+    public AjaxResult queryProduct(@PathVariable String productKey){
+        List<ServiceCapability> serviceCapabilities = deviceService.queryProduct(productKey);
+        return success(serviceCapabilities);
+    }
 }

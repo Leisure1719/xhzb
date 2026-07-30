@@ -1,6 +1,8 @@
 package com.xhzb.nursing.service;
 
 import java.util.List;
+
+import com.huaweicloud.sdk.iotda.v5.model.ServiceCapability;
 import com.xhzb.nursing.domain.Device;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.xhzb.nursing.domain.dto.DeviceDto;
@@ -72,4 +74,6 @@ public interface IDeviceService extends IService<Device>
     DeviceDetailVo getDeviceByIotId(String iotId);
 
     List queryServiceProperties(String iotId);
+
+    List<ServiceCapability> queryProduct(String productKey);
 }
